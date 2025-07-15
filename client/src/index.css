@@ -1,0 +1,145 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: hsl(0, 0%, 100%);
+  --foreground: hsl(240, 10%, 3.9%);
+  --muted: hsl(240, 4.8%, 95.9%);
+  --muted-foreground: hsl(240, 5%, 64.9%);
+  --popover: hsl(0, 0%, 100%);
+  --popover-foreground: hsl(240, 10%, 3.9%);
+  --card: hsl(0, 0%, 100%);
+  --card-foreground: hsl(240, 10%, 3.9%);
+  --border: hsl(240, 5.9%, 90%);
+  --input: hsl(240, 5.9%, 90%);
+  --primary: hsl(207, 90%, 54%);
+  --primary-foreground: hsl(0, 0%, 100%);
+  --secondary: hsl(240, 4.8%, 95.9%);
+  --secondary-foreground: hsl(240, 5.9%, 10%);
+  --accent: hsl(240, 4.8%, 95.9%);
+  --accent-foreground: hsl(240, 5.9%, 10%);
+  --destructive: hsl(0, 84.2%, 60.2%);
+  --destructive-foreground: hsl(0, 0%, 100%);
+  --ring: hsl(207, 90%, 54%);
+  --radius: 0.5rem;
+  
+  /* Custom colors for the e-commerce theme */
+  --primary-50: hsl(207, 100%, 97%);
+  --primary-500: hsl(207, 90%, 54%);
+  --primary-600: hsl(207, 90%, 45%);
+  --primary-700: hsl(207, 90%, 35%);
+  --primary-800: hsl(207, 90%, 25%);
+  --primary-900: hsl(207, 90%, 15%);
+  
+  --accent-500: hsl(158, 64%, 52%);
+  --accent-600: hsl(158, 64%, 42%);
+}
+
+.dark {
+  --background: hsl(240, 10%, 3.9%);
+  --foreground: hsl(0, 0%, 98%);
+  --muted: hsl(240, 3.7%, 15.9%);
+  --muted-foreground: hsl(240, 5%, 64.9%);
+  --popover: hsl(240, 10%, 3.9%);
+  --popover-foreground: hsl(0, 0%, 98%);
+  --card: hsl(240, 10%, 3.9%);
+  --card-foreground: hsl(0, 0%, 98%);
+  --border: hsl(240, 3.7%, 15.9%);
+  --input: hsl(240, 3.7%, 15.9%);
+  --primary: hsl(207, 90%, 54%);
+  --primary-foreground: hsl(0, 0%, 100%);
+  --secondary: hsl(240, 3.7%, 15.9%);
+  --secondary-foreground: hsl(0, 0%, 98%);
+  --accent: hsl(240, 3.7%, 15.9%);
+  --accent-foreground: hsl(0, 0%, 98%);
+  --destructive: hsl(0, 62.8%, 30.6%);
+  --destructive-foreground: hsl(0, 0%, 98%);
+  --ring: hsl(207, 90%, 54%);
+  
+  /* Dark theme custom colors */
+  --primary-700: hsl(207, 90%, 55%);
+  --primary-800: hsl(207, 90%, 45%);
+  --primary-900: hsl(207, 90%, 35%);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-sans antialiased bg-background text-foreground;
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+
+  .font-heading {
+    font-family: 'Poppins', system-ui, sans-serif;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-gray-100 dark:bg-slate-800;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-gray-300 dark:bg-slate-600 rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-gray-400 dark:bg-slate-500;
+  }
+
+  /* Line clamp utility */
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}
+
+@layer components {
+  /* Custom primary colors for Tailwind */
+  .bg-primary-50 { background-color: var(--primary-50); }
+  .bg-primary-500 { background-color: var(--primary-500); }
+  .bg-primary-600 { background-color: var(--primary-600); }
+  .bg-primary-700 { background-color: var(--primary-700); }
+  .bg-primary-800 { background-color: var(--primary-800); }
+  .bg-primary-900 { background-color: var(--primary-900); }
+  
+  .text-primary-500 { color: var(--primary-500); }
+  .text-primary-600 { color: var(--primary-600); }
+  .text-primary-700 { color: var(--primary-700); }
+  .text-primary-800 { color: var(--primary-800); }
+  .text-primary-900 { color: var(--primary-900); }
+  
+  .border-primary-500 { border-color: var(--primary-500); }
+  .border-primary-600 { border-color: var(--primary-600); }
+  
+  .hover\:bg-primary-700:hover { background-color: var(--primary-700); }
+  .hover\:text-primary-600:hover { color: var(--primary-600); }
+  
+  .dark\:hover\:text-primary-400:hover { color: hsl(207, 90%, 70%); }
+  
+  .bg-accent-500 { background-color: var(--accent-500); }
+  .bg-accent-600 { background-color: var(--accent-600); }
+  .text-accent-500 { color: var(--accent-500); }
+  .text-accent-600 { color: var(--accent-600); }
+}
+
+/* Font Awesome icons are imported at the top */
