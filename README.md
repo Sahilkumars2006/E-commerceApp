@@ -169,6 +169,7 @@ npm test
 - Set environment variables on your deployment platform as needed.
 ## Demo
 <img width="1280" height="720" alt="image" src="https://github.com/user-attachments/assets/ad1222ce-9f7b-495d-9a8b-b112b9bb6b0f" />
+<a href="https://ibb.co/cXtpXKSV"><img src="https://i.ibb.co/2YPLY01H/Shop-Craft-App.png" alt="Shop-Craft-App" border="0"></a>
 
 
 ## 🤝 Contributing
