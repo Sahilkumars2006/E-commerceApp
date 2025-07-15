@@ -15,7 +15,8 @@ export function useLogin() {
   
   return useMutation({
     mutationFn: async (credentials: LoginUser) => {
-      return apiRequest<User>("/api/login", "POST", credentials);
+      const res = await apiRequest("/api/login", "POST", credentials);
+      return res.json() as Promise<User>;
     },
     onSuccess: (user) => {
       queryClient.setQueryData(["/api/profile"], user);
@@ -28,7 +29,8 @@ export function useRegister() {
   
   return useMutation({
     mutationFn: async (userData: InsertUser) => {
-      return apiRequest<User>("/api/register", "POST", userData);
+      const res = await apiRequest("/api/register", "POST", userData);
+      return res.json() as Promise<User>;
     },
     onSuccess: (user) => {
       queryClient.setQueryData(["/api/profile"], user);

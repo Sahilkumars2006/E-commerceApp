@@ -92,13 +92,17 @@ export function useCart() {
               : item
           );
         } else {
-          return [...prev, {
-            id: Date.now(), // Temporary ID for local storage
-            productId: product.id,
-            quantity,
-            userId: null,
-            product
-          }];
+          return [
+            ...prev,
+            {
+              id: Date.now(), // Temporary ID for local storage
+              productId: product.id,
+              quantity,
+              userId: 0,
+              product,
+              addedAt: new Date(), // Ensure required property as Date
+            } as CartItemWithProduct,
+          ];
         }
       });
     }
