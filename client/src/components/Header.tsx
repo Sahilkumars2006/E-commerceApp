@@ -1,9 +1,20 @@
 import { useState, useEffect } from "react";
 import { useTheme } from "@/components/ThemeProvider";
-import { ShoppingCart, Search, Store, Moon, Sun } from "lucide-react";
+import { ShoppingCart, Search, Store, Moon, Sun, User, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useAuth, useLogout } from "@/hooks/useAuth";
+import { useToast } from "@/hooks/use-toast";
+import AuthModal from "./AuthModal";
+import { 
+  DropdownMenu, 
+  DropdownMenuContent, 
+  DropdownMenuItem, 
+  DropdownMenuLabel, 
+  DropdownMenuSeparator, 
+  DropdownMenuTrigger 
+} from "@/components/ui/dropdown-menu";
 
 interface HeaderProps {
   cartCount: number;
@@ -14,8 +25,12 @@ interface HeaderProps {
 export default function Header({ cartCount, onCartClick, onSearch }: HeaderProps) {
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const { theme, toggleTheme } = useTheme();
   const isMobile = useIsMobile();
+  const { data: user, isLoading: isAuthLoading } = useAuth();
+  const logoutMutation = useLogout();
+  const { toast } = useToast();
 
   // Debounce search
   useEffect(() => {
@@ -29,6 +44,22 @@ export default function Header({ cartCount, onCartClick, onSearch }: HeaderProps
   useEffect(() => {
     onSearch(debouncedSearch);
   }, [debouncedSearch, onSearch]);
+
+  const handleLogout = async () => {
+    try {
+      await logoutMutation.mutateAsync();
+      toast({
+        title: "Logged out",
+        description: "You've been successfully logged out.",
+      });
+    } catch (error) {
+      toast({
+        title: "Logout failed",
+        description: "Something went wrong. Please try again.",
+        variant: "destructive",
+      });
+    }
+  };
 
   return (
     <header className="bg-white dark:bg-slate-800 shadow-sm sticky top-0 z-50 transition-colors duration-300">
@@ -103,6 +134,45 @@ export default function Header({ cartCount, onCartClick, onSearch }: HeaderProps
                 </span>
               )}
             </Button>
+
+            {/* Authentication */}
+            {!isAuthLoading && (
+              <>
+                {user ? (
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="text-gray-600 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-slate-700"
+                      >
+                        <User className="h-5 w-5" />
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                      <DropdownMenuLabel>
+                        Hi, {user.firstName || user.username}!
+                      </DropdownMenuLabel>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem onClick={handleLogout}>
+                        <LogOut className="mr-2 h-4 w-4" />
+                        <span>Logout</span>
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                ) : (
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setIsAuthModalOpen(true)}
+                    className="text-gray-600 dark:text-slate-300 border-gray-300 dark:border-slate-600 hover:bg-gray-100 dark:hover:bg-slate-700"
+                  >
+                    <User className="h-4 w-4 mr-2" />
+                    Sign In
+                  </Button>
+                )}
+              </>
+            )}
           </div>
         </div>
 
@@ -124,6 +194,12 @@ export default function Header({ cartCount, onCartClick, onSearch }: HeaderProps
           </div>
         )}
       </div>
+      
+      {/* Authentication Modal */}
+      <AuthModal
+        isOpen={isAuthModalOpen}
+        onClose={() => setIsAuthModalOpen(false)}
+      />
     </header>
   );
 }

@@ -9,9 +9,9 @@ import type { ProductFilters } from "@shared/schema";
 export default function Home() {
   const [filters, setFilters] = useState<ProductFilters>({});
   const [isCartOpen, setIsCartOpen] = useState(false);
-  const { cart } = useCart();
+  const { cart, getTotalItems } = useCart();
 
-  const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+  const totalItems = getTotalItems();
 
   const handleFilterChange = (newFilters: ProductFilters) => {
     setFilters(prev => ({ ...prev, ...newFilters }));

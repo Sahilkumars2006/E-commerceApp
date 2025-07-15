@@ -10,11 +10,11 @@ interface CartModalProps {
 }
 
 export default function CartModal({ isOpen, onClose }: CartModalProps) {
-  const { cart, updateQuantity, removeFromCart, clearCart } = useCart();
+  const { cart, updateQuantity, removeFromCart, clearCart, getTotalPrice, getTotalItems } = useCart();
   const { toast } = useToast();
 
-  const total = cart.reduce((sum, item) => sum + (parseFloat(item.product.price) * item.quantity), 0);
-  const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+  const total = getTotalPrice();
+  const totalItems = getTotalItems();
 
   useEffect(() => {
     if (isOpen) {
@@ -137,7 +137,7 @@ export default function CartModal({ isOpen, onClose }: CartModalProps) {
               <div className="flex justify-between items-center mb-4">
                 <span className="text-base font-medium text-gray-900 dark:text-white">Total:</span>
                 <span className="text-xl font-bold text-gray-900 dark:text-white">
-                  ${total.toFixed(2)}
+                  ₹{total.toFixed(2)}
                 </span>
               </div>
               <div className="space-y-2">
